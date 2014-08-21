@@ -43,6 +43,7 @@ class Configuration implements ConfigurationInterface
         $this->addTokeninput($rootNode);
         $this->addAutocomplete($rootNode);
         $this->addSelect2($rootNode);
+        $this->addMultiSelect($rootNode);
 
         return $treeBuilder;
     }
@@ -353,6 +354,27 @@ class Configuration implements ConfigurationInterface
         $rootNode
             ->children()
                 ->arrayNode('select2')
+                    ->canBeUnset()
+                    ->treatNullLike(array('enabled' => true))
+                    ->treatTrueLike(array('enabled' => true))
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->booleanNode('enabled')->defaultFalse()->end()
+                        ->arrayNode('configs')
+                            ->prototype('variable')
+                            ->end()
+                        ->end()
+                    ->end()
+                ->end()
+            ->end()
+        ;
+    }
+
+    private function addMultiSelect(ArrayNodeDefinition $rootNode)
+    {
+        $rootNode
+            ->children()
+                ->arrayNode('multiselect')
                     ->canBeUnset()
                     ->treatNullLike(array('enabled' => true))
                     ->treatTrueLike(array('enabled' => true))

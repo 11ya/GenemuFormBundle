@@ -55,7 +55,7 @@ class GenemuFormExtension extends Extension
             $loader->load('mongodb.xml');
         }
 
-        foreach (array('captcha', 'recaptcha', 'tinymce', 'date', 'file', 'image', 'autocomplete', 'select2') as $type) {
+        foreach (array('captcha', 'recaptcha', 'tinymce', 'date', 'file', 'image', 'autocomplete', 'select2', 'multiselect') as $type) {
             if (isset($configs[$type]) && !empty($configs[$type]['enabled'])) {
                 $method = 'register' . ucfirst($type) . 'Configuration';
 
@@ -259,6 +259,21 @@ class GenemuFormExtension extends Extension
                 ->addArgument($type)
                 ->addArgument($configs['configs'])
                 ->addTag('form.type', array('alias' => 'genemu_jqueryselect2_'.$type))
+            ;
+
+            $container->setDefinition($serviceId.'.'.$type, $typeDef);
+        }
+    }
+
+    private function registerMultiselectConfiguration(array $configs, ContainerBuilder $container)
+    {
+        $serviceId = 'genemu.form.jquery.type.multiselect';
+        foreach (array('choice', 'entity') as $type) {
+            $typeDef = new DefinitionDecorator($serviceId);
+            $typeDef
+                ->addArgument($type)
+                ->addArgument($configs['configs'])
+                ->addTag('form.type', array('alias' => 'multiselect_'.$type))
             ;
 
             $container->setDefinition($serviceId.'.'.$type, $typeDef);

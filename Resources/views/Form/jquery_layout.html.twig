@@ -665,3 +665,15 @@
     </script>
 {% endblock %}
 
+{% block multiselect_javascript %}
+    <script type="text/javascript">
+        jQuery(document).ready(function($) {
+            $select = $('#{{ id }}');
+
+            {% block multiselect_javascript_prototype %}
+            $select.multiselect({{ configs|json_encode|raw }});
+            {% endblock %}
+        });
+    </script>
+{% endblock %}
+
