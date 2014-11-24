@@ -671,7 +671,24 @@
             $select = $('#{{ id }}');
 
             {% block multiselect_javascript_prototype %}
-            $select.multiselect({{ configs|json_encode|raw }});
+            $select.multiselect(
+                $.extend ({
+                    buttonText: function (options, select) {
+                        switch (options.length) {
+                            case 0:
+                                return 'Выберите значение';
+                            case 1:
+                                return options.text();
+                            default:
+                                return "Выбрано " + options.length + " из " + select.find("option").size();
+                        }
+                    },
+                    templates: {
+                        filter: '<li class="multiselect-item filtermsl">' +
+                        '<input class="form-control multiselect-search" type="text">' +
+                        '</li>'
+                    }
+                }, {{ configs|json_encode|raw }}));
             {% endblock %}
         });
     </script>
