@@ -676,7 +676,7 @@
                     buttonText: function (options, select) {
                         switch (options.length) {
                             case 0:
-                                return 'Выберите значение';
+                                return "{% if configs.placeholder is defined %}{{ configs.placeholder }}{% endif %}";
                             case 1:
                                 return options.text();
                             default:
