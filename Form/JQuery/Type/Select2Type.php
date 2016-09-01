@@ -42,10 +42,15 @@ class Select2Type extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        if ('hidden' === $this->widget && !empty($options['configs']['multiple'])) {
-            $builder->addViewTransformer(new ArrayToStringTransformer());
-        } elseif ('hidden' === $this->widget && empty($options['configs']['multiple']) && null !== $options['transformer']) {
-            $builder->addModelTransformer($options['transformer']);
+        if ('hidden' === $this->widget) {
+            if (null !== $options['transformer']) {
+                if (method_exists($options['transformer'], 'setMultiple')) {
+                    $options['transformer']->setMultiple($options['configs']['multiple']);
+                }
+                $builder->addModelTransformer($options['transformer']);
+            } elseif (!empty($options['configs']['multiple'])) {
+                $builder->addViewTransformer(new ArrayToStringTransformer());
+            }
         }
     }
 
