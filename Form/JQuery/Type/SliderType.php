@@ -15,6 +15,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * SliderType
@@ -31,7 +32,7 @@ class SliderType extends AbstractType
         $view->vars['configs'] = $options;
     }
 
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
             'min' => 0,
@@ -60,6 +61,14 @@ class SliderType extends AbstractType
      * {@inheritdoc}
      */
     public function getName()
+    {
+        return 'genemu_jqueryslider';
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getBlockPrefix()
     {
         return 'genemu_jqueryslider';
     }

@@ -16,7 +16,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Genemu\Bundle\FormBundle\Form\Core\EventListener\GeolocationListener;
 
 /**
@@ -65,7 +65,7 @@ class GeolocationType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
             'map' => false,
@@ -100,6 +100,15 @@ class GeolocationType extends AbstractType
      * {@inheritdoc}
      */
     public function getName()
+    {
+        return 'genemu_jquerygeolocation';
+    }
+
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getBlockPrefix()
     {
         return 'genemu_jquerygeolocation';
     }

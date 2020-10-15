@@ -20,6 +20,7 @@ use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\PropertyAccess\PropertyPath;
 use Symfony\Component\PropertyAccess\PropertyAccess;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * @author Bilal Amarni <bilal.amarni@gmail.com>
@@ -59,7 +60,7 @@ class AutocompleteType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $type = $this->type;
         $registry = $this->registry;
@@ -138,6 +139,14 @@ class AutocompleteType extends AbstractType
      * {@inheritdoc}
      */
     public function getName()
+    {
+        return 'genemu_jqueryautocomplete_' . $this->type;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getBlockPrefix()
     {
         return 'genemu_jqueryautocomplete_' . $this->type;
     }
